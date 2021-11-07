@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'home',
 
     #third party
-    # 'crispy_forms',
+    'crispy_forms',
 
 ]
 
