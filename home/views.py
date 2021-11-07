@@ -1,5 +1,7 @@
-from django.shortcuts import  render
+from django.shortcuts import  render, redirect
 from django.http import HttpResponse
+from .forms import ContactForm
+from django.contrib import messages
 
 
 
@@ -8,7 +10,21 @@ from django.http import HttpResponse
 # Create your views here.
 
 def home(request):
-    return render(request, 'home/index.html')
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Form has been sent')
+            return redirect('home')
+    else:
+        form = ContactForm()
+        
+    context = {
+        'form': form
+    }
+
+    return render(request, 'home/index.html', context)
 
 def about(request):
     return render(request, 'home/about.html')
